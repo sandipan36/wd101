@@ -10,41 +10,40 @@
 <body>
     <h1>my first form</h1>
    
-    <form id="registration-form">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-      
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-      
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-      
-        <label for="dob">Date of Birth:</label>
-        <input type="date" id="dob" name="dob"  required max="2004-03-11" min="1966-03-11">
-      
-        <label for="accept-terms">I accept the terms and conditions:</label>
-        <input type="checkbox" id="accept-terms" name="accept-terms" required>
-      
-        <button type="submit">Register</button>
-      </form>
+<form>
+  <label for="name">Name:</label>
+  <input type="text" id="name" name="name" required>
 
+  <label for="email">Email:</label>
+  <input type="email" id="email" name="email" required>
 
-      <table id="users-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Password</th>
-            <th>Dob</th>
-            <th>Accepted terms?</th>
-          </tr>
-        </thead>
-        <tbody>
-        </tbody>
-      </table>
-      
-      
+  <label for="password">Password:</label>
+  <input type="password" id="password" name="password" minlength="8" required>
+
+  <label for="dob">Date of Birth:</label>
+  <input type="date" id="dob" name="dob" required>
+
+  <label>
+    <input type="checkbox" name="terms" required>
+    I accept the terms and conditions.
+  </label>
+
+  <button type="submit">Submit</button>
+</form>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Password</th>
+      <th>Date of Birth</th>
+      <th>Accepted terms?</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
     
         <script src="index.js"></script>
 </body>
