@@ -1,37 +1,52 @@
+const form = document.querySelector('form');
+const tableBody = document.querySelector('tbody');
 
-
-
-
-
-const form = document.getElementById('registration-form');
-const usersTable = document.getElementById('users-table');
+// Retrieve data from web storage on page load
+if (localStorage.getItem('formData')) {
+  const formData = JSON.parse(localStorage.getItem('formData'));
+  addRowToTable(formData);
+}
 
 form.addEventListener('submit', (event) => {
   event.preventDefault();
 
-  // Retrieve input values
-  const name = document.getElementById('name').value;
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-  const dob = document.getElementById('dob').value;
-  const acceptTerms = document.getElementById('accept-terms').checked;
+  const formData = {
+    name: form.elements.name.value,
+    email: form.elements.email.value,
+    password: form.elements.password.value,
+    dob: form.elements.dob.value,
+    termsAccepted: form.elements.terms.checked
+  };
 
-  // Create new row in table
-  const newRow = usersTable.insertRow();
-  const nameCell = newRow.insertCell();
-  const emailCell = newRow.insertCell();
-  const passwordCell = newRow.insertCell();
-  const dobCell = newRow.insertCell();
-  const acceptTermsCell = newRow.insertCell();
+  // Check if date of birth is between 18 and 55 years ago
+  const dobDate = new Date(formData.dob);
+  const eighteenYearsAgo = new Date();
+  eighteenYearsAgo.setFullYear(eighteenYearsAgo.getFullYear() - 18);
+  const fiftyFiveYearsAgo = new Date();
+  fiftyFiveYearsAgo.setFullYear(fiftyFiveYearsAgo.getFullYear() - 55);
+  if (dobDate > eighteenYearsAgo || dobDate < fiftyFiveYearsAgo) {
+    alert('Date of birth must be between 18 and 55 years ago.');
+    return;
+  }
 
-  nameCell.innerText = name;
-  emailCell.innerText = email;
-  passwordCell.innerText = password;
-  dobCell.innerText = dob;
-  acceptTermsCell.innerText = acceptTerms ? 'Yes' : 'No';
+  // Save data to web storage
+  localStorage.setItem('formData', JSON.stringify(formData));
 
-  
+  // Add row to table
+  addRowToTable(formData);
 
-  // Clear form
+  // Reset form
   form.reset();
 });
+
+function addRowToTable(formData) {
+  const tableRow = document.createElement('tr');
+  tableRow.innerHTML = `
+    <td>${formData.name}</td>
+    <td>${formData.email}</td>
+    <td>${formData.password}</td>
+    <td>${formData.dob}</td>
+    <td>${formData.termsAccepted ? 'Yes' : 'No'}</td>
+  `;
+  tableBody.appendChild(tableRow);
+}
