@@ -1,52 +1,49 @@
-const form = document.querySelector('form');
-const tableBody = document.querySelector('tbody');
+      // Load entries from local storage on page load
+      const entries = JSON.parse(localStorage.getItem('entries')) || [];
+      const tableBody = document.querySelector('#entries tbody');
 
-// Retrieve data from web storage on page load
-if (localStorage.getItem('formData')) {
-  const formData = JSON.parse(localStorage.getItem('formData'));
-  addRowToTable(formData);
-}
+      // Add entries to the table
+      function addEntry(entry) {
+        const row = tableBody.insertRow();
+        row.insertCell().textContent = entry.name;
+        row.insertCell().textContent = entry.email;
+        row.insertCell().textContent = entry.password;
+        row.insertCell().textContent = entry.dob;
+        row.insertCell().textContent = entry.acceptedTerms;
+      }
 
-form.addEventListener('submit', (event) => {
-  event.preventDefault();
+      // Add submitted entry to the table and save to local storage
+      function handleSubmit(event) {
+        event.preventDefault();
+        const form = event.target;
+        const name = form.elements.name.value;
+        const email = form.elements.email.value;
+        const password = form.elements.password.value;
+        const dob = form.elements.dob.value;
+        const acceptedTerms = form.elements['accepted-terms'].checked;
 
-  const formData = {
-    name: form.elements.name.value,
-    email: form.elements.email.value,
-    password: form.elements.password.value,
-    dob: form.elements.dob.value,
-    termsAccepted: form.elements.terms.checked
-  };
+        // Validate email and age
+        const validEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        const age = new Date().getFullYear() - new Date(dob).getFullYear();
+        const validAge = age >= 18 && age <= 55;
 
-  // Check if date of birth is between 18 and 55 years ago
-  const dobDate = new Date(formData.dob);
-  const eighteenYearsAgo = new Date();
-  eighteenYearsAgo.setFullYear(eighteenYearsAgo.getFullYear() - 18);
-  const fiftyFiveYearsAgo = new Date();
-  fiftyFiveYearsAgo.setFullYear(fiftyFiveYearsAgo.getFullYear() - 55);
-  if (dobDate > eighteenYearsAgo || dobDate < fiftyFiveYearsAgo) {
-    alert('Date of birth must be between 18 and 55 years ago.');
-    return;
-  }
+        if (!validEmail || !validAge) {
+          alert('Please enter a valid email address and age between 18 and 55.');
+          return;
+        }
 
-  // Save data to web storage
-  localStorage.setItem('formData', JSON.stringify(formData));
+        const entry = { name, email, password, dob, acceptedTerms };
+        entries.push(entry);
+        addEntry(entry);
+        localStorage.setItem('entries', JSON.stringify(entries));
+        form.reset();
+      }
 
-  // Add row to table
-  addRowToTable(formData);
+      // Add saved entries to the table
+      for (const entry of entries) {
+        addEntry(entry);
+      }
 
-  // Reset form
-  form.reset();
-});
-
-function addRowToTable(formData) {
-  const tableRow = document.createElement('tr');
-  tableRow.innerHTML = `
-    <td>${formData.name}</td>
-    <td>${formData.email}</td>
-    <td>${formData.password}</td>
-    <td>${formData.dob}</td>
-    <td>${formData.termsAccepted ? 'Yes' : 'No'}</td>
-  `;
-  tableBody.appendChild(tableRow);
-}
+      // Listen for form submit event
+      const form = document.querySelector('#registration-form');
+      form.addEventListener('submit', handleSubmit);
