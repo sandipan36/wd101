@@ -1,50 +1,65 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html>
+  <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet"  href="form.css">
-    <title>My First Form</title>
-</head>
-<body>
-    <h1>my first form</h1>
-   
-<form>
-  <label for="name">Name:</label>
-  <input type="text" id="name" name="name" required>
-
+    <title >Registration Form</title>
+    <link rel="stylesheet" href="s.css">
+  </head>
+  <body>
+    <div class="cont">
+      <h1>Registration Form</h1>
+    <form id="registration-form">
+    <div class="item">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" required><br>
+    </div>
+      
+<div class="item">
   <label for="email">Email:</label>
-  <input type="email" id="email" name="email" required>
-
-  <label for="password">Password:</label>
-  <input type="password" id="password" name="password"  required>
-
+  <input type="email" id="email" name="email" required><br>
+</div>
+      
+     <div class="item">
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required><br>
+     </div>
+      
+<div class="item">
   <label for="dob">Date of Birth:</label>
-  <input type="date" id="dob" name="dob" required max="2004-03-11" min="1966-03-11">
+  <input type="date" id="dob" name="dob" required max="2004-03-11" min="1966-03-11"><br>
+</div>
+      
+<div class="item">
+  <label for="accepted-terms">Accepted Terms:</label>
+  <input type="checkbox" id="accepted-terms" name="accepted-terms" required><br>
 
-  <label>
-    <input type="checkbox" name="terms" required>
-    I accept the terms and conditions.
-  </label>
+  <button class="btn "type="submit">Submit</button>
+</div>
+      
+    </form>
+    </div>
+    <div class="tab">
+      <h1>User Entries</h1>
+      <table id="entries">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>DOB</th>
+            <th>Accepted Terms</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
 
-  <button type="submit">Submit</button>
-</form>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Password</th>
-      <th>Date of Birth</th>
-      <th>Accepted terms?</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
-</table>
+    </div>
 
     
-        <script src="index.js"></script>
-</body>
+
+    <script src="index.js">
+
+    </script>
+  </body>
 </html>
